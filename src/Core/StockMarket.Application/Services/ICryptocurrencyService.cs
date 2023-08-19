@@ -1,4 +1,5 @@
 ﻿using StockMarket.Application.DTOs.CryptocurrencyDTOs;
+using StockMarket.Application.DTOs.ResponseDTOs;
 using StockMarket.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ namespace StockMarket.Application.Services
     public interface ICryptocurrencyService
     {
        
-        Task<List<CryptocurrencyDto>> GetCryptocurrenciesAsync();
-        Task<List<CryptocurrencyDto>> GetCryptocurrenciesAsync(Expression<Func<Cryptocurrency,bool>> func);
-        Task<CryptocurrencyDto> GetCryptocurrencyAsync(int id);
-        Task<CryptocurrencyDto> GetCryptocurrencyAsync(Expression<Func<Cryptocurrency, bool>> func);
-        Task CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency);
-        Task RemoveCryptocurrencyAsync(int id);
-        Task UpdateCryptocurrencyAsync(UpdateCryptocurrencyDto updateCryptocurrencyDto);
+        Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync();
+        Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync(Expression<Func<Cryptocurrency,bool>> func);
+        Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id);
+        Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(Expression<Func<Cryptocurrency, bool>> func);
+        Task<ResponseDto<NoContentDto>> CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency);
+        Task<ResponseDto<NoContentDto>> RemoveCryptocurrencyAsync(int id);
+        Task<ResponseDto<NoContentDto>> UpdateCryptocurrencyAsync(UpdateCryptocurrencyDto updateCryptocurrencyDto);
     }
 }
