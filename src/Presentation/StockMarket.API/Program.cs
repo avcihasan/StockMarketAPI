@@ -1,3 +1,4 @@
+using StockMarket.Application.Extensions;
 using StockMarket.Persistence.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddStockMarketDbContext(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddPersistenceService();
+builder.Services.AddApplicationService();
 
 
 var app = builder.Build();

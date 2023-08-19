@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
+using StockMarket.Persistence.Services;
 using StockMarket.Persistence.UnitOfWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockMarket.Persistence.Extensions
 {
@@ -14,6 +11,10 @@ namespace StockMarket.Persistence.Extensions
         public static void AddPersistenceService(this IServiceCollection service)
         {
             service.AddScoped<IRepositoryManager, RepositoryManager>();
+            service.AddScoped<IServiceManager, ServiceManager>();
+
+            service.AddScoped<ICryptocurrencyService, CryptocurrencyService>();
+
         }
     }
 }

@@ -10,7 +10,7 @@ namespace StockMarket.Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
 
         public GenericRepository(StockMartketDbContext stockMartketDbContext)
         {
@@ -26,24 +26,14 @@ namespace StockMarket.Persistence.Repositories
         public async Task CreateRangeAsync(params T[] entities)
            => await _dbSet.AddRangeAsync(entities);
 
-        public void RemoveRange(params T[] entities)
-           => _dbSet.RemoveRange(entities);
-
-        public bool Remove(T entity)
-            => _dbSet.Remove(entity).State == EntityState.Deleted;
-
-        public async Task<bool> RemoveAsync(int id)
-            => Remove(await GetAsync(id));
-
-        public async Task<bool> RemoveAsync(Expression<Func<T, bool>> func)
-            => Remove(await GetAsync(func));
-
         public async Task RemoveRangeAsync(params int[] ids)
         {
             foreach (int id in ids)
-              await RemoveAsync(id);
+                await RemoveAsync(id);
         }
 
+        public async Task<bool> RemoveAsync(int id)
+            => _dbSet.Remove(await GetAsync(id)).State == EntityState.Deleted;
         public async Task<T> GetAsync(int id, bool tracking = true)
             => await GetAll(tracking).FirstOrDefaultAsync(x => x.Id == id);
 
@@ -60,11 +50,14 @@ namespace StockMarket.Persistence.Repositories
             => _dbSet.Update(entity).State == EntityState.Modified;
 
 
-        private IQueryable<T> Track(IQueryable<T> query,bool tracking)
+        private static IQueryable<T> Track(IQueryable<T> query,bool tracking)
         {
             if (!tracking)
                 query.AsNoTracking();
             return query;
         }
+
+        public bool Any(Expression<Func<T, bool>> func)
+            => _dbSet.Where(func).AsNoTracking().Any();
     }
 }

@@ -14,7 +14,9 @@ namespace StockMarket.Persistence.Extensions
     {
         public static void AddStockMarketDbContext(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDbContext<StockMartketDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("SqlCon")));
+            services.AddDbContext<StockMartketDbContext>(x => {
+                x.UseSqlServer(configuration.GetConnectionString("SqlCon"));
+            });
 
         }
     }

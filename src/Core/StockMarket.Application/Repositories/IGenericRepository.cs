@@ -18,12 +18,10 @@ namespace StockMarket.Application.Repositories
         Task CreateRangeAsync(List<T> entities);
         Task CreateRangeAsync(params T[] entities);
         bool Update(T entity);
-        void RemoveRange(params T[] entities);
-        bool Remove(T entity);
-        Task<bool> RemoveAsync(int id);
-        Task<bool> RemoveAsync(Expression<Func<T, bool>> func);
         Task RemoveRangeAsync(params int[] ids);
+        Task<bool> RemoveAsync(int id);
 
+        bool Any(Expression<Func<T, bool>> func);
 
     }
 }
