@@ -1,3 +1,4 @@
+using StockMarket.Persistence.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +7,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddStockMarketDbContext(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddPersistenceService();
+
 
 var app = builder.Build();
 
