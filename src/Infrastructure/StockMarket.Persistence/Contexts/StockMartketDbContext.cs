@@ -16,6 +16,7 @@ namespace StockMarket.Persistence.Contexts
         {
         }
         public DbSet<Cryptocurrency> Cryptocurrencies { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

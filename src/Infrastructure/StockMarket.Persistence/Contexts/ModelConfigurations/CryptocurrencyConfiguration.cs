@@ -26,7 +26,8 @@ namespace StockMarket.Persistence.Contexts.ModelConfigurations
                     Id= i,
                     Name=$"Cryptocurrency-{i}",
                     Stock=i*50,
-                    UnitPrice=i+20
+                    UnitPrice=i+20,
+                    CategoryId=1
                 });
             return cryptocurrencies;
         }

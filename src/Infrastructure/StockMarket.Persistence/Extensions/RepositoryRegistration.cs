@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using StockMarket.Application.Repositories;
+using StockMarket.Domain.Common;
 using StockMarket.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,5 +17,6 @@ namespace StockMarket.Persistence.Extensions
         {
             services.AddScoped<ICryptocurrencyRepository, CryptocurrencyRepository>();
         }
+
     }
 }

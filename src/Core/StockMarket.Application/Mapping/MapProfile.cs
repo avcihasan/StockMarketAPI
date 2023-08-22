@@ -13,7 +13,10 @@ namespace StockMarket.Application.Mapping
     {
         public MapProfile()
         {
-            CreateMap<Cryptocurrency, CryptocurrencyDto>().ReverseMap();
+            CreateMap<Cryptocurrency, CryptocurrencyDto>()
+                .ForMember(x => x.CategoryName, x=> x.MapFrom(x=>x.Category.Name))
+                .ReverseMap();
+
             CreateMap<CreateCryptocurrencyDto, Cryptocurrency>();
             CreateMap<UpdateCryptocurrencyDto, Cryptocurrency>();
         }

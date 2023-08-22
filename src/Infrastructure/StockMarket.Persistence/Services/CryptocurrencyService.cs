@@ -5,6 +5,7 @@ using StockMarket.Application.DTOs.ResponseDTOs;
 using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
 using StockMarket.Domain.Entities;
+using StockMarket.Persistence.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,12 @@ namespace StockMarket.Persistence.Services
         }
 
         public async Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync()
-            => SuccessResponseDto<List<CryptocurrencyDto>>.Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository.GetAll().ToListAsync()), HttpStatusCode.OK);
+            => SuccessResponseDto<List<CryptocurrencyDto>>
+                .Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository
+                    .GetAll()
+                    .Include(x => x.Category)
+                    .ToListAsync()), HttpStatusCode.OK);
+
 
         public async Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync(Expression<Func<Cryptocurrency, bool>> func)
             => SuccessResponseDto<List<CryptocurrencyDto>>.Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository.GetAll(func).ToListAsync()), HttpStatusCode.OK);
@@ -78,6 +84,7 @@ namespace StockMarket.Persistence.Services
             await _repositoryManager.SaveAsync();
             return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.OK);
         }
+
 
     }
 }

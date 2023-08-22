@@ -11,9 +11,9 @@ namespace StockMarket.Application.DTOs.ResponseDTOs
     {
         public List<string> Errors { get; set; }
 
-        public static ResponseDto<T> Create(List<string> errors,HttpStatusCode statusCode)
+        public static ResponseDto<T> Create(List<string> errors,HttpStatusCode statusCode=HttpStatusCode.BadRequest)
             => new FailResponseDto<T>() { Errors = errors ,StatusCode= statusCode };
-        public static ResponseDto<T> Create(string error, HttpStatusCode statusCode)
+        public static ResponseDto<T> Create(string error, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
             => new FailResponseDto<T>() { Errors = new() { error}, StatusCode = statusCode };
     }
 }

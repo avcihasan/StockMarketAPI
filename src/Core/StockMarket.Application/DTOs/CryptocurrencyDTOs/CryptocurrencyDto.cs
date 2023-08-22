@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockMarket.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace StockMarket.Application.DTOs.CryptocurrencyDTOs
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }
+        public string CategoryName { get; set; }
+
     }
 }

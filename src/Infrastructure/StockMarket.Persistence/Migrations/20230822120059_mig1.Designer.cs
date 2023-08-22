@@ -12,7 +12,7 @@ using StockMarket.Persistence.Contexts;
 namespace StockMarket.Persistence.Migrations
 {
     [DbContext(typeof(StockMartketDbContext))]
-    [Migration("20230819105840_mig1")]
+    [Migration("20230822120059_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -25,6 +25,37 @@ namespace StockMarket.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("StockMarket.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kategori Deneme",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("StockMarket.Domain.Entities.Cryptocurrency", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +63,9 @@ namespace StockMarket.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -50,12 +84,15 @@ namespace StockMarket.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Cryptocurrencies");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-1",
                             Stock = 50,
@@ -65,6 +102,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-2",
                             Stock = 100,
@@ -74,6 +112,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-3",
                             Stock = 150,
@@ -83,6 +122,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 4,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-4",
                             Stock = 200,
@@ -92,6 +132,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 5,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-5",
                             Stock = 250,
@@ -101,6 +142,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 6,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-6",
                             Stock = 300,
@@ -110,6 +152,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 7,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-7",
                             Stock = 350,
@@ -119,6 +162,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 8,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-8",
                             Stock = 400,
@@ -128,6 +172,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 9,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-9",
                             Stock = 450,
@@ -137,6 +182,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 10,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-10",
                             Stock = 500,
@@ -146,6 +192,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 11,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-11",
                             Stock = 550,
@@ -155,6 +202,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 12,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-12",
                             Stock = 600,
@@ -164,6 +212,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 13,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-13",
                             Stock = 650,
@@ -173,6 +222,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 14,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-14",
                             Stock = 700,
@@ -182,6 +232,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 15,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-15",
                             Stock = 750,
@@ -191,6 +242,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 16,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-16",
                             Stock = 800,
@@ -200,6 +252,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 17,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-17",
                             Stock = 850,
@@ -209,6 +262,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 18,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-18",
                             Stock = 900,
@@ -218,6 +272,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 19,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-19",
                             Stock = 950,
@@ -227,6 +282,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 20,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-20",
                             Stock = 1000,
@@ -236,6 +292,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 21,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-21",
                             Stock = 1050,
@@ -245,6 +302,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 22,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-22",
                             Stock = 1100,
@@ -254,6 +312,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 23,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-23",
                             Stock = 1150,
@@ -263,6 +322,7 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 24,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-24",
                             Stock = 1200,
@@ -272,12 +332,29 @@ namespace StockMarket.Persistence.Migrations
                         new
                         {
                             Id = 25,
+                            CategoryId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cryptocurrency-25",
                             Stock = 1250,
                             UnitPrice = 45m,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("StockMarket.Domain.Entities.Cryptocurrency", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Entities.Category", "Category")
+                        .WithMany("Cryptocurrencies")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("StockMarket.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Cryptocurrencies");
                 });
 #pragma warning restore 612, 618
         }
