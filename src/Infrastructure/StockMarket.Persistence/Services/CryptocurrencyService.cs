@@ -36,7 +36,7 @@ namespace StockMarket.Persistence.Services
             return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.Created);
         }
 
-        public async Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync()
+        public async Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync()
             => SuccessResponseDto<List<CryptocurrencyDto>>
                 .Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository
                     .GetAll()
@@ -44,7 +44,7 @@ namespace StockMarket.Persistence.Services
                     .ToListAsync()), HttpStatusCode.OK);
 
 
-        public async Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync(Expression<Func<Cryptocurrency, bool>> func)
+        public async Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync(Expression<Func<Cryptocurrency, bool>> func)
             => SuccessResponseDto<List<CryptocurrencyDto>>.Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository.GetAll(func).ToListAsync()), HttpStatusCode.OK);
 
         public async Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id)

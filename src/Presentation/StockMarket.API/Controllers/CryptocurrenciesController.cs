@@ -19,7 +19,7 @@ namespace StockMarket.API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => CreateActionResult(await _serviceManager.CryptocurrencyService.GetCryptocurrenciesAsync());
+            => CreateActionResult(await _serviceManager.CryptocurrencyService.GetAllCryptocurrenciesAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)

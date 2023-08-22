@@ -10,11 +10,13 @@ namespace StockMarket.Persistence.UnitOfWorks
 {
     public class ServiceManager : IServiceManager
     {
-        public ServiceManager(ICryptocurrencyService cryptocurrencyService)
+        public ServiceManager(ICryptocurrencyService cryptocurrencyService, ICategoryService categoryService)
         {
             CryptocurrencyService = cryptocurrencyService;
+            CategoryService = categoryService;
         }
 
         public ICryptocurrencyService CryptocurrencyService { get; private set; }
+        public ICategoryService CategoryService { get; private set; }
     }
 }

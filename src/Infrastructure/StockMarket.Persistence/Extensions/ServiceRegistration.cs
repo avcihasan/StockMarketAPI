@@ -14,6 +14,7 @@ namespace StockMarket.Persistence.Extensions
             service.AddScoped<IServiceManager, ServiceManager>();
 
             service.AddScoped<ICryptocurrencyService, CryptocurrencyService>();
+            service.AddScoped<ICategoryService , CategoryService>();
 
         }
     }

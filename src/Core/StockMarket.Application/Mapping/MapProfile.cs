@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using StockMarket.Application.DTOs.CategoryDTOs;
 using StockMarket.Application.DTOs.CryptocurrencyDTOs;
 using StockMarket.Domain.Entities;
 using System;
@@ -16,9 +17,13 @@ namespace StockMarket.Application.Mapping
             CreateMap<Cryptocurrency, CryptocurrencyDto>()
                 .ForMember(x => x.CategoryName, x=> x.MapFrom(x=>x.Category.Name))
                 .ReverseMap();
-
             CreateMap<CreateCryptocurrencyDto, Cryptocurrency>();
             CreateMap<UpdateCryptocurrencyDto, Cryptocurrency>();
+
+
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
         }
     }
 }

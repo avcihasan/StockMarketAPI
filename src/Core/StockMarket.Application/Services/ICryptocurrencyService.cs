@@ -12,9 +12,8 @@ namespace StockMarket.Application.Services
 {
     public interface ICryptocurrencyService
     {
-       
-        Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync();
-        Task<ResponseDto<List<CryptocurrencyDto>>> GetCryptocurrenciesAsync(Expression<Func<Cryptocurrency,bool>> func);
+        Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync();
+        Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync(Expression<Func<Cryptocurrency,bool>> func);
         Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id);
         Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(Expression<Func<Cryptocurrency, bool>> func);
         Task<ResponseDto<NoContentDto>> CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency);

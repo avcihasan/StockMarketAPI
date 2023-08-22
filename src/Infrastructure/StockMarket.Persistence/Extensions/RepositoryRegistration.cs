@@ -16,6 +16,7 @@ namespace StockMarket.Persistence.Extensions
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<ICryptocurrencyRepository, CryptocurrencyRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
         }
 
     }

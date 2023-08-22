@@ -10,5 +10,6 @@ namespace StockMarket.Application.UnitOfWorks
     public interface IServiceManager
     {
         public ICryptocurrencyService CryptocurrencyService { get; }
+        public ICategoryService CategoryService { get; }
     }
 }

@@ -10,6 +10,7 @@ namespace StockMarket.Application.UnitOfWorks
     public interface  IRepositoryManager
     {
         public ICryptocurrencyRepository CryptocurrencyRepository { get;}
+        public ICategoryRepository CategoryRepository { get; }
 
         void Save();
         Task SaveAsync();

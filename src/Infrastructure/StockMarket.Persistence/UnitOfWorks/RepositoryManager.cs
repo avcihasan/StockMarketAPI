@@ -13,15 +13,17 @@ namespace StockMarket.Persistence.UnitOfWorks
     {
         readonly StockMartketDbContext _context;
 
-        public RepositoryManager(StockMartketDbContext context, ICryptocurrencyRepository cryptocurrencyRepository)
+        public RepositoryManager(StockMartketDbContext context, ICryptocurrencyRepository cryptocurrencyRepository, ICategoryRepository categoryRepository)
         {
             _context = context;
             CryptocurrencyRepository = cryptocurrencyRepository;
+            CategoryRepository = categoryRepository;
         }
 
         public ICryptocurrencyRepository CryptocurrencyRepository { get; private set; }
+        public ICategoryRepository CategoryRepository { get; private set; }
 
-       
+
 
         public void Save()
             => _context.SaveChanges();
