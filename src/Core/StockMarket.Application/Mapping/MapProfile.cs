@@ -20,10 +20,12 @@ namespace StockMarket.Application.Mapping
             CreateMap<CreateCryptocurrencyDto, Cryptocurrency>();
             CreateMap<UpdateCryptocurrencyDto, Cryptocurrency>();
 
+            CreateMap<CryptocurrencyPrice, CryptocurrencyPriceDto>();
 
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
-            CreateMap<Category, CategoryDto>();
+            CreateMap<Category, CategoryDto>(); 
+          
         }
     }
 }

@@ -16,6 +16,7 @@ namespace StockMarket.Application.DTOs.CryptocurrencyDTOs
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }
         public string CategoryName { get; set; }
+        public List<CryptocurrencyPriceDto> CryptocurrencyPrices { get; set; }
 
     }
 }

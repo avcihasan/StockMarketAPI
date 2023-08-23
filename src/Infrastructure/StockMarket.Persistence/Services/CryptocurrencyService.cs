@@ -26,7 +26,6 @@ namespace StockMarket.Persistence.Services
             _repositoryManager = repositoryManager;
             _mapper = mapper;
         }
-
         public async Task<ResponseDto<NoContentDto>> CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency)
         {
             bool result = await _repositoryManager.CryptocurrencyRepository.CreateAsync(_mapper.Map<Cryptocurrency>(cryptocurrency));
@@ -41,6 +40,7 @@ namespace StockMarket.Persistence.Services
                 .Create(_mapper.Map<List<CryptocurrencyDto>>(await _repositoryManager.CryptocurrencyRepository
                     .GetAll()
                     .Include(x => x.Category)
+                    .Include(x=>x.CryptocurrencyPrices)
                     .ToListAsync()), HttpStatusCode.OK);
 
 
@@ -49,7 +49,11 @@ namespace StockMarket.Persistence.Services
 
         public async Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id)
         {
-            Cryptocurrency cryptocurrency = await _repositoryManager.CryptocurrencyRepository.GetAsync(id);
+            Cryptocurrency cryptocurrency = await _repositoryManager.CryptocurrencyRepository
+                .GetAll()
+                .Include(x => x.CryptocurrencyPrices)
+                .Include(x => x.Category)
+                .FirstOrDefaultAsync(x=>x.Id==id); 
             return cryptocurrency is null
                 ? FailResponseDto<CryptocurrencyDto>.Create("Bulunamadı", HttpStatusCode.InternalServerError)
                 : SuccessResponseDto<CryptocurrencyDto>.Create(_mapper.Map<CryptocurrencyDto>(cryptocurrency), HttpStatusCode.OK);

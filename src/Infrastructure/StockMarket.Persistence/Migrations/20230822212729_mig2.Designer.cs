@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockMarket.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using StockMarket.Persistence.Contexts;
 namespace StockMarket.Persistence.Migrations
 {
     [DbContext(typeof(StockMartketDbContext))]
-    partial class StockMartketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822212729_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,183 +363,6 @@ namespace StockMarket.Persistence.Migrations
                     b.HasIndex("CryptocurrencyId");
 
                     b.ToTable("CryptocurrencyPrices");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CryptocurrencyId = 1,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3348),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CryptocurrencyId = 2,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3386),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CryptocurrencyId = 3,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3388),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CryptocurrencyId = 4,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3390),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CryptocurrencyId = 5,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3391),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CryptocurrencyId = 6,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3397),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CryptocurrencyId = 7,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3399),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CryptocurrencyId = 8,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3400),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CryptocurrencyId = 9,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3402),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CryptocurrencyId = 10,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3406),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CryptocurrencyId = 11,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3407),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CryptocurrencyId = 12,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3409),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CryptocurrencyId = 13,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3410),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CryptocurrencyId = 14,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3412),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CryptocurrencyId = 15,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3414),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CryptocurrencyId = 16,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3415),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CryptocurrencyId = 17,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3417),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CryptocurrencyId = 18,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3420),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CryptocurrencyId = 19,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3422),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CryptocurrencyId = 20,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3423),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CryptocurrencyId = 21,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3425),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 22,
-                            CryptocurrencyId = 22,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3427),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 23,
-                            CryptocurrencyId = 23,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3428),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 24,
-                            CryptocurrencyId = 24,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3430),
-                            Price = 100m
-                        },
-                        new
-                        {
-                            Id = 25,
-                            CryptocurrencyId = 25,
-                            Date = new DateTime(2023, 8, 23, 15, 49, 49, 325, DateTimeKind.Local).AddTicks(3431),
-                            Price = 100m
-                        });
                 });
 
             modelBuilder.Entity("StockMarket.Domain.Entities.Cryptocurrency", b =>

@@ -23,12 +23,12 @@ namespace StockMarket.Persistence.Contexts.ModelConfigurations
             for (int i = 1; i < count + 1; i++)
                 cryptocurrencies.Add(new()
                 {
-                    Id= i,
-                    Name=$"Cryptocurrency-{i}",
-                    Stock=i*50,
-                    UnitPrice=i+20,
-                    CategoryId=1
-                });
+                    Id = i,
+                    Name = $"Cryptocurrency-{i}",
+                    Stock = i * 50,
+                    UnitPrice = 100,
+                    CategoryId = 1,
+                }) ;
             return cryptocurrencies;
         }
 

@@ -2,6 +2,7 @@
 using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
 using StockMarket.Persistence.Services;
+using StockMarket.Persistence.Services.BackgroundServices;
 using StockMarket.Persistence.UnitOfWorks;
 
 namespace StockMarket.Persistence.Extensions
@@ -15,6 +16,8 @@ namespace StockMarket.Persistence.Extensions
 
             service.AddScoped<ICryptocurrencyService, CryptocurrencyService>();
             service.AddScoped<ICategoryService , CategoryService>();
+
+            service.AddHostedService<ChangeCryptocurrencyPriceBackgroundService>();
 
         }
     }
