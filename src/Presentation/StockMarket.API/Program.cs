@@ -20,7 +20,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(
 
 builder.Services.AddStockMarketDbContext(builder.Configuration);
 builder.Services.AddRepositories();
-builder.Services.AddPersistenceService();
+builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddApplicationService();
 
 

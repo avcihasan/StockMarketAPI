@@ -31,15 +31,15 @@ namespace StockMarket.Persistence.Services.BackgroundServices
         }
         private void DoWork(object? state)
         {
-            Random random = new();
-            using var scope = service.CreateScope();
-            var repositoryManager = scope.ServiceProvider.GetRequiredService<IRepositoryManager>();
-            repositoryManager.CryptocurrencyRepository.GetAll().ToList().ForEach(x =>
-            {
-                x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
-                x.CryptocurrencyPrices.Add(new() { CryptocurrencyId = x.Id, Date = DateTime.Now, Price = x.UnitPrice });
-            });
-            repositoryManager.Save();
+            //Random random = new();
+            //using var scope = service.CreateScope();
+            //var repositoryManager = scope.ServiceProvider.GetRequiredService<IRepositoryManager>();
+            //repositoryManager.CryptocurrencyRepository.GetAll().ToList().ForEach(x =>
+            //{
+            //    x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
+            //    x.CryptocurrencyPrices.Add(new() { CryptocurrencyId = x.Id, Date = DateTime.Now, Price = x.UnitPrice });
+            //});
+            //repositoryManager.Save();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

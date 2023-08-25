@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
 using StockMarket.Persistence.Services;
@@ -9,7 +10,7 @@ namespace StockMarket.Persistence.Extensions
 {
     public static class ServiceRegistration
     {
-        public static void AddPersistenceService(this IServiceCollection service)
+        public static void AddPersistenceService(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddScoped<IRepositoryManager, RepositoryManager>();
             service.AddScoped<IServiceManager, ServiceManager>();
@@ -18,6 +19,12 @@ namespace StockMarket.Persistence.Extensions
             service.AddScoped<ICategoryService , CategoryService>();
 
             service.AddHostedService<ChangeCryptocurrencyPriceBackgroundService>();
+
+
+            service.AddSingleton<IRedisService>(sp =>
+            {
+                return new RedisService(configuration["Redis"]);
+            });
 
         }
     }

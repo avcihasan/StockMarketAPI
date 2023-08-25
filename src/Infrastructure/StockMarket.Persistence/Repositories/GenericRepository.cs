@@ -59,5 +59,11 @@ namespace StockMarket.Persistence.Repositories
 
         public bool Any(Expression<Func<T, bool>> func)
             => _dbSet.Where(func).AsNoTracking().Any();
+
+        public IQueryable<T> GetAll(params string[] includes)
+        {
+            IQueryable<T> query = GetAll();
+            return query.Include(includes.First());
+        }
     }
 }

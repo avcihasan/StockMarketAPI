@@ -14,6 +14,5 @@ namespace StockMarket.Persistence.Repositories
         public CryptocurrencyRepository(StockMartketDbContext stockMartketDbContext) : base(stockMartketDbContext)
         {
         }
-
     }
 }

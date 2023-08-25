@@ -12,6 +12,7 @@ namespace StockMarket.Application.Repositories
     {
         IQueryable<T> GetAll(bool tracking=true);
         IQueryable<T> GetAll(Expression<Func<T, bool>> func, bool tracking = true);
+        IQueryable<T> GetAll(params string[] includes);
         Task<T> GetAsync(int id, bool tracking = true);
         Task<T> GetAsync(Expression<Func<T, bool>> func, bool tracking = true);
         Task<bool> CreateAsync(T entity);
