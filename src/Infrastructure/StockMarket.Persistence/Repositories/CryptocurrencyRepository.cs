@@ -1,4 +1,6 @@
-﻿using StockMarket.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
+using StockMarket.Application.Repositories;
 using StockMarket.Domain.Entities;
 using StockMarket.Persistence.Contexts;
 using System;
@@ -14,5 +16,5 @@ namespace StockMarket.Persistence.Repositories
         public CryptocurrencyRepository(StockMartketDbContext stockMartketDbContext) : base(stockMartketDbContext)
         {
         }
-    }
+    } 
 }

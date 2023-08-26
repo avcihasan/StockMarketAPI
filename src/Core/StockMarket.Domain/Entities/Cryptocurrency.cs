@@ -13,6 +13,7 @@ namespace StockMarket.Domain.Entities
         {
             CryptocurrencyPrices=new HashSet<CryptocurrencyPrice>();
         }
+        public string Code { get; set; }
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }

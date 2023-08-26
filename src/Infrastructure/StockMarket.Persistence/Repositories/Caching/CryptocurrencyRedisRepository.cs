@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using StockMarket.Application.Repositories;
 using StockMarket.Application.Services;
+using StockMarket.Application.UnitOfWorks;
 using StockMarket.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -37,11 +38,7 @@ namespace StockMarket.Persistence.Repositories.Caching
 
         public async Task<bool> CreateAsync(Cryptocurrency entity)
         {
-            if (!_database.KeyExists(key))
-                RedisSet();
-            await _repository.CreateAsync(entity);
-
-            return await _database.HashSetAsync(key, entity.Id, JsonSerializer.Serialize(entity)); ;
+            return await _repository.CreateAsync(entity);
         }
 
         public Task CreateRangeAsync(List<Cryptocurrency> entities)
@@ -77,7 +74,9 @@ namespace StockMarket.Persistence.Repositories.Caching
         {
             if (!_database.KeyExists(key))
                 return await RedisSet().FirstOrDefaultAsync(x => x.Id == id);
-            return JsonSerializer.Deserialize<Cryptocurrency>(await _database.HashGetAsync(key, id));
+
+            var cryptocurrency = await _database.HashGetAsync(key, id);
+            return cryptocurrency.HasValue  ? JsonSerializer.Deserialize<Cryptocurrency>(cryptocurrency) : await RedisSet().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public  Task<Cryptocurrency> GetAsync(Expression<Func<Cryptocurrency, bool>> func, bool tracking = true)

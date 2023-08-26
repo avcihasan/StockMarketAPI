@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using StockMarket.Application.Repositories;
 using StockMarket.Application.Services;
+using StockMarket.Application.UnitOfWorks;
 using StockMarket.Domain.Common;
 using StockMarket.Persistence.Contexts;
 using StockMarket.Persistence.Repositories;

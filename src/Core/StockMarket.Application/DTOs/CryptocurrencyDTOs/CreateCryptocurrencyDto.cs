@@ -9,6 +9,7 @@ namespace StockMarket.Application.DTOs.CryptocurrencyDTOs
     public class CreateCryptocurrencyDto
     {
         public string Name { get; set; }
+        public string Code { get; set; }
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }
         public int CategoryId { get; set; }

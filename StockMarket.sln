@@ -11,15 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D59544D1-FBD2-46DB-A9D0-7C7721923498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Domain", "src\Core\StockMarket.Domain\StockMarket.Domain.csproj", "{AFA73AC9-436C-4741-B7B9-6521D211E7FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.Domain", "src\Core\StockMarket.Domain\StockMarket.Domain.csproj", "{AFA73AC9-436C-4741-B7B9-6521D211E7FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Application", "src\Core\StockMarket.Application\StockMarket.Application.csproj", "{FC2C0E50-29E4-4260-8423-365F7C928DC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.Application", "src\Core\StockMarket.Application\StockMarket.Application.csproj", "{FC2C0E50-29E4-4260-8423-365F7C928DC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Infrastructure", "src\Infrastructure\StockMarket.Infrastructure\StockMarket.Infrastructure.csproj", "{336E5B23-CD54-418B-AF95-A15EF92046FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.Infrastructure", "src\Infrastructure\StockMarket.Infrastructure\StockMarket.Infrastructure.csproj", "{336E5B23-CD54-418B-AF95-A15EF92046FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Persistence", "src\Infrastructure\StockMarket.Persistence\StockMarket.Persistence.csproj", "{1182D69E-FEB7-477E-BCAD-5F8EE77CC4E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.Persistence", "src\Infrastructure\StockMarket.Persistence\StockMarket.Persistence.csproj", "{1182D69E-FEB7-477E-BCAD-5F8EE77CC4E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.API", "src\Presentation\StockMarket.API\StockMarket.API.csproj", "{EC0A6378-F08F-4B83-A332-29484FB3313D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.API", "src\Presentation\StockMarket.API\StockMarket.API.csproj", "{EC0A6378-F08F-4B83-A332-29484FB3313D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3620D7D6-BD8D-4FA7-BF2A-29EB56590051}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

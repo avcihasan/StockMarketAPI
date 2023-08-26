@@ -12,6 +12,14 @@ namespace StockMarket.Application.Validators.CryptocurrencyValidators
     {
         public CreateCryptocurrencyValidator()
         {
+            RuleFor(x=>x.Code)
+                .NotNull()
+                    .WithMessage("Kripto para kodunu giriniz!")
+                .MinimumLength(2)
+                    .WithMessage("Kripto para kodunu en az 2 karakter olmalıdır!")
+                .MaximumLength(3)
+                    .WithMessage("Kripto para kodunu en fazla 3 karakter olabilir!");
+
             RuleFor(x => x.Name)
                 .NotNull()
                     .WithMessage("Kripto para adını giriniz!")

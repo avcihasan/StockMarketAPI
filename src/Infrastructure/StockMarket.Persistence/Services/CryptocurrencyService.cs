@@ -28,10 +28,12 @@ namespace StockMarket.Persistence.Services
         }
         public async Task<ResponseDto<NoContentDto>> CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency)
         {
-            bool result = await _repositoryManager.CryptocurrencyRepository.CreateAsync(_mapper.Map<Cryptocurrency>(cryptocurrency));
+            Cryptocurrency _cryptocurrency = _mapper.Map<Cryptocurrency>(cryptocurrency);
+            bool result = await _repositoryManager.CryptocurrencyRepository.CreateAsync(_cryptocurrency);
             if (!result)
                 return FailResponseDto<NoContentDto>.Create("Ekleme Hatası", HttpStatusCode.InternalServerError);
             await _repositoryManager.SaveAsync();
+            await _repositoryManager.CryptocurrencyRepository.GetAsync(_cryptocurrency.Id);
             return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.Created);
         }
 

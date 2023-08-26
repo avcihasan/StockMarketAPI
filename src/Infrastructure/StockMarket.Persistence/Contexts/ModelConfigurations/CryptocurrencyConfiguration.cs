@@ -13,6 +13,9 @@ namespace StockMarket.Persistence.Contexts.ModelConfigurations
     {
         public void Configure(EntityTypeBuilder<Cryptocurrency> builder)
         {
+            builder
+                .HasIndex(o => o.Code)
+                .IsUnique();
             builder.HasData(GenareteSeedData(25));
         }
 
@@ -28,6 +31,7 @@ namespace StockMarket.Persistence.Contexts.ModelConfigurations
                     Stock = i * 50,
                     UnitPrice = 100,
                     CategoryId = 1,
+                    Code = $"c{i}"
                 }) ;
             return cryptocurrencies;
         }
