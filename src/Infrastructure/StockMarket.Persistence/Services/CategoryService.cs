@@ -35,11 +35,11 @@ namespace StockMarket.Persistence.Services
             return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.Created);
         }
 
-        public async Task<ResponseDto<List<CategoryDto>>> GetAllCategoriesAsync()
-          => SuccessResponseDto<List<CategoryDto>>
-                .Create(_mapper.Map<List<CategoryDto>>(await _repositoryManager.CategoryRepository
+        public Task<ResponseDto<List<CategoryDto>>> GetAllCategoriesAsync()
+          => Task.FromResult(SuccessResponseDto<List<CategoryDto>>
+                .Create(_mapper.Map<List<CategoryDto>>(_repositoryManager.CategoryRepository
                     .GetAll()
-                    .ToListAsync()), HttpStatusCode.OK);
+                    .ToList()), HttpStatusCode.OK));
 
         public async Task<ResponseDto<CategoryDto>> GetCategoryAsync(int id)
         {

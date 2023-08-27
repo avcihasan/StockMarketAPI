@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.API", "src\Pres
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3620D7D6-BD8D-4FA7-BF2A-29EB56590051}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Persistence.UnitTest", "tests\StockMarket.Persistence.UnitTest\StockMarket.Persistence.UnitTest.csproj", "{EFEE3C9F-064E-434D-A456-8273BC1D300D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{EC0A6378-F08F-4B83-A332-29484FB3313D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC0A6378-F08F-4B83-A332-29484FB3313D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC0A6378-F08F-4B83-A332-29484FB3313D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEE3C9F-064E-434D-A456-8273BC1D300D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEE3C9F-064E-434D-A456-8273BC1D300D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEE3C9F-064E-434D-A456-8273BC1D300D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEE3C9F-064E-434D-A456-8273BC1D300D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{336E5B23-CD54-418B-AF95-A15EF92046FB} = {7C56D5B8-F55B-4BDF-A603-728493EC9D11}
 		{1182D69E-FEB7-477E-BCAD-5F8EE77CC4E0} = {7C56D5B8-F55B-4BDF-A603-728493EC9D11}
 		{EC0A6378-F08F-4B83-A332-29484FB3313D} = {D59544D1-FBD2-46DB-A9D0-7C7721923498}
+		{EFEE3C9F-064E-434D-A456-8273BC1D300D} = {3620D7D6-BD8D-4FA7-BF2A-29EB56590051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4009AD20-CD16-417B-98CF-F69016616793}
