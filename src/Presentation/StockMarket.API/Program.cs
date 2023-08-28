@@ -1,6 +1,12 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.HttpSys;
+using Microsoft.IdentityModel.Tokens;
 using StockMarket.Application.Extensions;
+using StockMarket.Infrastructure.Extensions;
 using StockMarket.Infrastructure.Filters;
 using StockMarket.Persistence.Extensions;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,7 +27,26 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(
 builder.Services.AddStockMarketDbContext(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddPersistenceService(builder.Configuration);
-builder.Services.AddApplicationService();
+builder.Services.AddApplicationService(builder.Configuration); 
+builder.Services.AddInfrastructureServices(); 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer("User", options =>
+    {
+        options.TokenValidationParameters = new()
+        {
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidAudience = builder.Configuration["JwtToken:Audience"],
+            ValidIssuer = builder.Configuration["JwtToken:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SigningKey"])),
+
+             LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false
+        };
+    });
 
 
 var app = builder.Build();
@@ -34,6 +59,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors();
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

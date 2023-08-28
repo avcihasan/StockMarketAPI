@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StockMarket.Domain.Common;
 using StockMarket.Domain.Entities;
+using StockMarket.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StockMarket.Persistence.Contexts
 {
-    public class StockMartketDbContext:DbContext
+    public class StockMartketDbContext:IdentityDbContext<AppUser,AppRole,string>
     {
         public StockMartketDbContext(DbContextOptions<StockMartketDbContext> options):base(options)
         {

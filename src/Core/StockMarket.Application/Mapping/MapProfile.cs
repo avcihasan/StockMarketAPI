@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using StockMarket.Application.DTOs.CategoryDTOs;
 using StockMarket.Application.DTOs.CryptocurrencyDTOs;
+using StockMarket.Application.DTOs.UserDTOs;
 using StockMarket.Domain.Entities;
+using StockMarket.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,10 @@ namespace StockMarket.Application.Mapping
             CreateMap<UpdateCryptocurrencyDto, Cryptocurrency>();
 
             CreateMap<CryptocurrencyPrice, CryptocurrencyPriceDto>();
+                
+            CreateMap<CreateUserDto, AppUser>();
+
+            
 
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();

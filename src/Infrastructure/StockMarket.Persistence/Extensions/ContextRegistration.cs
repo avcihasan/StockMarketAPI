@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockMarket.Domain.Identity;
 using StockMarket.Persistence.Contexts;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace StockMarket.Persistence.Extensions
             services.AddDbContext<StockMartketDbContext>(x => {
                 x.UseSqlServer(configuration.GetConnectionString("SqlCon"));
             });
-
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<StockMartketDbContext>();
         }
     }
 }

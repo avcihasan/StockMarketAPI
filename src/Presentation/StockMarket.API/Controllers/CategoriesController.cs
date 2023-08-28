@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockMarket.Application.DTOs.CategoryDTOs;
 using StockMarket.Application.UnitOfWorks;
 
 namespace StockMarket.API.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes ="User")]
     public class CategoriesController : BaseController
     {
         readonly IServiceManager _serviceManager;

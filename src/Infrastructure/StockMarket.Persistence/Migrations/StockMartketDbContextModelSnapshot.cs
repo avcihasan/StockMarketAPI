@@ -22,6 +22,112 @@ namespace StockMarket.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("StockMarket.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -398,177 +504,335 @@ namespace StockMarket.Persistence.Migrations
                         {
                             Id = 1,
                             CryptocurrencyId = 1,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4000),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8110),
                             Price = 100m
                         },
                         new
                         {
                             Id = 2,
                             CryptocurrencyId = 2,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4060),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8176),
                             Price = 100m
                         },
                         new
                         {
                             Id = 3,
                             CryptocurrencyId = 3,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4063),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8179),
                             Price = 100m
                         },
                         new
                         {
                             Id = 4,
                             CryptocurrencyId = 4,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4066),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8182),
                             Price = 100m
                         },
                         new
                         {
                             Id = 5,
                             CryptocurrencyId = 5,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4068),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8184),
                             Price = 100m
                         },
                         new
                         {
                             Id = 6,
                             CryptocurrencyId = 6,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4091),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8210),
                             Price = 100m
                         },
                         new
                         {
                             Id = 7,
                             CryptocurrencyId = 7,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4094),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8212),
                             Price = 100m
                         },
                         new
                         {
                             Id = 8,
                             CryptocurrencyId = 8,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4096),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8215),
                             Price = 100m
                         },
                         new
                         {
                             Id = 9,
                             CryptocurrencyId = 9,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4098),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8217),
                             Price = 100m
                         },
                         new
                         {
                             Id = 10,
                             CryptocurrencyId = 10,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4102),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8223),
                             Price = 100m
                         },
                         new
                         {
                             Id = 11,
                             CryptocurrencyId = 11,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4104),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8226),
                             Price = 100m
                         },
                         new
                         {
                             Id = 12,
                             CryptocurrencyId = 12,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4106),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8228),
                             Price = 100m
                         },
                         new
                         {
                             Id = 13,
                             CryptocurrencyId = 13,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4108),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8231),
                             Price = 100m
                         },
                         new
                         {
                             Id = 14,
                             CryptocurrencyId = 14,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4110),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8233),
                             Price = 100m
                         },
                         new
                         {
                             Id = 15,
                             CryptocurrencyId = 15,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4112),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8236),
                             Price = 100m
                         },
                         new
                         {
                             Id = 16,
                             CryptocurrencyId = 16,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4114),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8238),
                             Price = 100m
                         },
                         new
                         {
                             Id = 17,
                             CryptocurrencyId = 17,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4116),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8240),
                             Price = 100m
                         },
                         new
                         {
                             Id = 18,
                             CryptocurrencyId = 18,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4120),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8466),
                             Price = 100m
                         },
                         new
                         {
                             Id = 19,
                             CryptocurrencyId = 19,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4122),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8469),
                             Price = 100m
                         },
                         new
                         {
                             Id = 20,
                             CryptocurrencyId = 20,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4124),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8472),
                             Price = 100m
                         },
                         new
                         {
                             Id = 21,
                             CryptocurrencyId = 21,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4126),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8474),
                             Price = 100m
                         },
                         new
                         {
                             Id = 22,
                             CryptocurrencyId = 22,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4128),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8477),
                             Price = 100m
                         },
                         new
                         {
                             Id = 23,
                             CryptocurrencyId = 23,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4130),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8479),
                             Price = 100m
                         },
                         new
                         {
                             Id = 24,
                             CryptocurrencyId = 24,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4132),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8482),
                             Price = 100m
                         },
                         new
                         {
                             Id = 25,
                             CryptocurrencyId = 25,
-                            Date = new DateTime(2023, 8, 26, 17, 38, 51, 380, DateTimeKind.Local).AddTicks(4134),
+                            Date = new DateTime(2023, 8, 28, 21, 31, 14, 766, DateTimeKind.Local).AddTicks(8484),
                             Price = 100m
                         });
+                });
+
+            modelBuilder.Entity("StockMarket.Domain.Identity.AppRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("StockMarket.Domain.Identity.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Identity.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Identity.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StockMarket.Domain.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("StockMarket.Domain.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StockMarket.Domain.Entities.Cryptocurrency", b =>
