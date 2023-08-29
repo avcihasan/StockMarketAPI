@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.IdentityModel.Tokens;
+using StockMarket.API.Extensions;
 using StockMarket.Application.Extensions;
 using StockMarket.Infrastructure.Extensions;
 using StockMarket.Infrastructure.Filters;
@@ -57,6 +58,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCustomExceptionHandler();
 app.UseCors();
 app.UseHttpsRedirection();
 

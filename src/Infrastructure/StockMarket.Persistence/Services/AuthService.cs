@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StockMarket.Application.DTOs.ResponseDTOs;
 using StockMarket.Application.DTOs.TokenDTOs;
 using StockMarket.Application.DTOs.UserDTOs;
+using StockMarket.Application.Exceptions;
 using StockMarket.Application.Services;
 using StockMarket.Domain.Identity;
 using System;
@@ -32,15 +33,15 @@ namespace StockMarket.Persistence.Services
         {
             AppUser user = await _userManager.FindByNameAsync(loginUserDto.UserName);
             if (user is null)
-                return FailResponseDto<TokenDto>.Create("Şifre veya kullanıcı adı hatalı", System.Net.HttpStatusCode.InternalServerError);
+                throw new UserNotFoundException();
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, loginUserDto.Password, false);
             if (signInResult.Succeeded)
             {
                 var accessToken = _tokenService.CreateAccessToken(1);
                 await _userService.UpdateRefreshTokenAsync(accessToken.RefreshToken, user, accessToken.Expiration, 1);
-                return SuccessResponseDto<TokenDto>.Create(accessToken, System.Net.HttpStatusCode.OK);
+                return ResponseDto<TokenDto>.Success(accessToken, System.Net.HttpStatusCode.OK);
             }
-            return FailResponseDto<TokenDto>.Create("Şifre veya kullanıcı adı hatalı", System.Net.HttpStatusCode.InternalServerError);
+            throw new LoginException();
         }
 
         public async Task<ResponseDto<TokenDto>> RefreshTokenLoginAsync(string refreshToken)
@@ -50,10 +51,9 @@ namespace StockMarket.Persistence.Services
             {
                 TokenDto token = _tokenService.CreateAccessToken(1);
                 await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 1);
-                return SuccessResponseDto<TokenDto>.Create(token, System.Net.HttpStatusCode.OK);
+                return ResponseDto<TokenDto>.Success(token, System.Net.HttpStatusCode.OK);
             }
-
-            return FailResponseDto<TokenDto>.Create("hata", System.Net.HttpStatusCode.InternalServerError);
+            throw new LoginException();
         }
     }
 }

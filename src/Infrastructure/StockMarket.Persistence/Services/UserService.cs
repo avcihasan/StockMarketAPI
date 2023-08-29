@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using StockMarket.Application.DTOs.ResponseDTOs;
 using StockMarket.Application.DTOs.UserDTOs;
+using StockMarket.Application.Exceptions;
 using StockMarket.Application.Services;
 using StockMarket.Domain.Identity;
 using System;
@@ -25,13 +26,17 @@ namespace StockMarket.Persistence.Services
 
         public async Task<ResponseDto<NoContentDto>> CreateUserAsync(CreateUserDto createUserDto)
         {
-            AppUser user= _mapper.Map<AppUser>(createUserDto);
+            AppUser user = _mapper.Map<AppUser>(createUserDto);
             user.Id = Guid.NewGuid().ToString();
             IdentityResult result = await _userManager.CreateAsync(user, createUserDto.Password);
             if (result.Succeeded)
-                return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.OK);
+                return ResponseDto<NoContentDto>.Success(HttpStatusCode.OK);
 
-            return FailResponseDto<NoContentDto>.Create(result.Errors.Select(x => $"{x.Code} - {x.Description}").ToList(), HttpStatusCode.InternalServerError);
+            StringBuilder sb = new();
+            foreach (var error in result.Errors.Select(x => $"{x.Code} - {x.Description}\n").ToList())
+                sb.Append(error);
+
+            throw new CreateFailedException(sb.ToString());
 
         }
 
@@ -40,7 +45,7 @@ namespace StockMarket.Persistence.Services
             if (user is not null)
             {
                 user.RefreshToken = refreshToken;
-                user.RefreshTokenEndDate=accessTokenDate.AddMinutes(addOnAccessTokenDate);
+                user.RefreshTokenEndDate = accessTokenDate.AddMinutes(addOnAccessTokenDate);
                 await _userManager.UpdateAsync(user);
             }
         }

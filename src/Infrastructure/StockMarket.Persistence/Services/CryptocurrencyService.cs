@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockMarket.Application.DTOs.CryptocurrencyDTOs;
 using StockMarket.Application.DTOs.ResponseDTOs;
+using StockMarket.Application.Exceptions;
 using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
 using StockMarket.Domain.Entities;
@@ -31,15 +32,15 @@ namespace StockMarket.Persistence.Services
             Cryptocurrency _cryptocurrency = _mapper.Map<Cryptocurrency>(cryptocurrency);
             bool result = await _repositoryManager.CryptocurrencyRepository.CreateAsync(_cryptocurrency);
             if (!result)
-                return FailResponseDto<NoContentDto>.Create("Ekleme Hatası", HttpStatusCode.InternalServerError);
+                throw new CreateFailedException(typeof(Cryptocurrency));
             await _repositoryManager.SaveAsync();
             await _repositoryManager.CryptocurrencyRepository.GetAsync(_cryptocurrency.Id);
-            return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.Created);
+            return ResponseDto<NoContentDto>.Success(HttpStatusCode.Created);
         }
 
         public Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync()
-            => Task.FromResult(SuccessResponseDto<List<CryptocurrencyDto>>
-                .Create(
+            => Task.FromResult(ResponseDto<List<CryptocurrencyDto>>
+                .Success(
                 _mapper.Map<List<CryptocurrencyDto>>(_repositoryManager.CryptocurrencyRepository.GetAll().ToList()),
                 HttpStatusCode.OK));
 
@@ -52,7 +53,7 @@ namespace StockMarket.Persistence.Services
 
 
         public Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync(Expression<Func<Cryptocurrency, bool>> func)
-            => Task.FromResult(SuccessResponseDto<List<CryptocurrencyDto>>.Create(_mapper.Map<List<CryptocurrencyDto>>(_repositoryManager.CryptocurrencyRepository.GetAll(func).ToList()), HttpStatusCode.OK));
+            => Task.FromResult(ResponseDto<List<CryptocurrencyDto>>.Success(_mapper.Map<List<CryptocurrencyDto>>(_repositoryManager.CryptocurrencyRepository.GetAll(func).ToList()), HttpStatusCode.OK));
 
         public async Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id)
         {
@@ -64,38 +65,38 @@ namespace StockMarket.Persistence.Services
             Cryptocurrency cryptocurrency = await _repositoryManager.CryptocurrencyRepository
                .GetAsync(id);
             return cryptocurrency is null
-                ? FailResponseDto<CryptocurrencyDto>.Create("Bulunamadı", HttpStatusCode.InternalServerError)
-                : SuccessResponseDto<CryptocurrencyDto>.Create(_mapper.Map<CryptocurrencyDto>(cryptocurrency), HttpStatusCode.OK);
+                ? throw new NotFoundException(typeof(Cryptocurrency))
+                : ResponseDto<CryptocurrencyDto>.Success(_mapper.Map<CryptocurrencyDto>(cryptocurrency), HttpStatusCode.OK);
         }
 
         public async Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(Expression<Func<Cryptocurrency, bool>> func)
         {
             Cryptocurrency cryptocurrency = await _repositoryManager.CryptocurrencyRepository.GetAsync(func);
             return cryptocurrency is null
-                ? FailResponseDto<CryptocurrencyDto>.Create("Bulunamadı", HttpStatusCode.InternalServerError)
-                : SuccessResponseDto<CryptocurrencyDto>.Create(_mapper.Map<CryptocurrencyDto>(cryptocurrency), HttpStatusCode.OK);
+                ? throw new NotFoundException(typeof(Cryptocurrency))
+                : ResponseDto<CryptocurrencyDto>.Success(_mapper.Map<CryptocurrencyDto>(cryptocurrency), HttpStatusCode.OK);
         }
 
         public async Task<ResponseDto<NoContentDto>> RemoveCryptocurrencyAsync(int id)
         {
             if (!_repositoryManager.CryptocurrencyRepository.Any(x => x.Id == id))
-                return FailResponseDto<NoContentDto>.Create("Bulunamadı", HttpStatusCode.InternalServerError);
+                throw new NotFoundException(typeof(Cryptocurrency));
             bool result = await _repositoryManager.CryptocurrencyRepository.RemoveAsync(id);
             if (!result)
-                return FailResponseDto<NoContentDto>.Create("silme hatası", HttpStatusCode.InternalServerError);
+                throw new CreateFailedException(typeof(Cryptocurrency));
             await _repositoryManager.SaveAsync();
-            return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.OK);
+            return ResponseDto<NoContentDto>.Success(HttpStatusCode.OK);
         }
 
         public async Task<ResponseDto<NoContentDto>> UpdateCryptocurrencyAsync(UpdateCryptocurrencyDto updateCryptocurrencyDto)
         {
             if (!_repositoryManager.CryptocurrencyRepository.Any(x => x.Id == updateCryptocurrencyDto.Id))
-                return FailResponseDto<NoContentDto>.Create("Bulunamadı", HttpStatusCode.InternalServerError);
+                throw new NotFoundException(typeof(Cryptocurrency));
             bool result = _repositoryManager.CryptocurrencyRepository.Update(_mapper.Map<Cryptocurrency>(updateCryptocurrencyDto));
             if (!result)
-                return FailResponseDto<NoContentDto>.Create("güncelleme hatası", HttpStatusCode.InternalServerError);
+                throw new UpdateFailedException(typeof(Cryptocurrency));
             await _repositoryManager.SaveAsync();
-            return SuccessResponseDto<NoContentDto>.Create(HttpStatusCode.OK);
+            return ResponseDto<NoContentDto>.Success(HttpStatusCode.OK);
         }
 
 

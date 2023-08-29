@@ -16,16 +16,15 @@ namespace StockMarket.Infrastructure.Filters
 
             if (!context.ModelState.IsValid)
             {
-                List<string> errorMessages = new();
-
+                ErrorDto errorDto = new();
                 var errors = context.ModelState
                     .Where(x => x.Value.Errors.Any()).Select(x=> x.Value.Errors.Select(x=>x.ErrorMessage));
 
                 foreach (var error in errors)
                     foreach (var errorMessage in error)
-                        errorMessages.Add(errorMessage);
+                        errorDto.Errors.Add(errorMessage);
 
-                        context.Result = new BadRequestObjectResult(FailResponseDto<ValidationFilter>.Create(errorMessages));
+                        context.Result = new BadRequestObjectResult(ResponseDto<ErrorDto>.Fail(errorDto));
                 return;
             }
           await  next();

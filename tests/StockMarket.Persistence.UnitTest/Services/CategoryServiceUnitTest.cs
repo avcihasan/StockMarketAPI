@@ -3,11 +3,13 @@ using FluentAssertions;
 using Moq;
 using StockMarket.Application.DTOs.CategoryDTOs;
 using StockMarket.Application.DTOs.ResponseDTOs;
+using StockMarket.Application.Exceptions;
 using StockMarket.Application.Repositories;
 using StockMarket.Application.UnitOfWorks;
 using StockMarket.Domain.Entities;
 using StockMarket.Persistence.Repositories;
 using StockMarket.Persistence.Services;
+using System;
 using System.Linq.Expressions;
 using System.Net;
 using Xunit;
@@ -29,21 +31,17 @@ namespace StockMarket.Persistence.UnitTest.Services
 
 
         [Fact]
-        public async void CreateCategoryAsync_InvalidData_ReturnsFailResponse()
+        public void CreateCategoryAsync_InvalidData_CreateFailedException()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.CreateAsync(It.IsAny<Category>())).ReturnsAsync(false);
             _mockMapper.Setup(x => x.Map<Category>(It.IsAny<CreateCategoryDto>())).Returns(new Category());
 
 
-            var result = await _categoryService.CreateCategoryAsync(It.IsAny<CreateCategoryDto>());
+            Func<Task> func = async () => await _categoryService.CreateCategoryAsync(It.IsAny<CreateCategoryDto>());
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<NoContentDto>>()
-                .Subject
-                .Errors
-                .First()
-                .Should()
-                .Be("Ekleme Hatası");
+            func.Should()
+                .ThrowAsync<CreateFailedException>()
+                .WithMessage("Category - Oluşturma Hatası !");
         }
 
 
@@ -58,7 +56,7 @@ namespace StockMarket.Persistence.UnitTest.Services
             var result = await _categoryService.CreateCategoryAsync(It.IsAny<CreateCategoryDto>());
 
             result.StatusCode.Should().Be(HttpStatusCode.Created);
-            result.Should().BeOfType<SuccessResponseDto<NoContentDto>>();
+            result.Should().BeOfType<ResponseDto<NoContentDto>>();
 
         }
 
@@ -72,7 +70,7 @@ namespace StockMarket.Persistence.UnitTest.Services
 
             var result = await _categoryService.GetAllCategoriesAsync();
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeOfType<SuccessResponseDto<List<CategoryDto>>>()
+            result.Should().BeOfType<ResponseDto<List<CategoryDto>>>()
                 .Subject
                 .Data
                 .Should()
@@ -85,17 +83,16 @@ namespace StockMarket.Persistence.UnitTest.Services
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public async void GetCategoryAsync_CategoryNotFound_ReturnsFailResponse(int id)
+        public void GetCategoryAsync_CategoryNotFound_NotFoundException(int id)
         {
             Category category = null;
             _mockRepositoryManager.Setup(x => x.CategoryRepository.GetAsync(It.IsAny<int>(), It.IsAny<bool>())).ReturnsAsync(category);
 
-            var result = await _categoryService.GetCategoryAsync(id);
+            Func<Task> func = async () => await _categoryService.GetCategoryAsync(id);
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<CategoryDto>>()
-                .Subject.Errors.First().Should().Be("Bulunamadı");
-
+            func.Should()
+                .ThrowAsync<NotFoundException>()
+                .WithMessage("Category - Bulunamadı !");
         }
 
         [Theory]
@@ -113,7 +110,7 @@ namespace StockMarket.Persistence.UnitTest.Services
             var result = await _categoryService.GetCategoryAsync(id);
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeOfType<SuccessResponseDto<CategoryDto>>()
+            result.Should().BeOfType<ResponseDto<CategoryDto>>()
                 .Subject
                 .Data
                 .Should()
@@ -129,15 +126,15 @@ namespace StockMarket.Persistence.UnitTest.Services
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public async void RemoveCategoryAsync_CategoryNotFound_ReturnsFailResponse(int id)
+        public  void RemoveCategoryAsync_CategoryNotFound_NotFoundException(int id)
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(false);
 
-            var result = await _categoryService.RemoveCategoryAsync(id);
+            Func<Task> func = async () => await _categoryService.RemoveCategoryAsync(id);
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<NoContentDto>>()
-                .Subject.Errors.First().Should().Be("Bulunamadı");
+            func.Should()
+                .ThrowAsync<NotFoundException>()
+                .WithMessage("Category - Bulunamadı !");
         }
 
 
@@ -147,16 +144,16 @@ namespace StockMarket.Persistence.UnitTest.Services
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public async void RemoveCategoryAsync_RemoveFailed_ReturnsFailResponse(int id)
+        public  void RemoveCategoryAsync_RemoveFailed_ReturnsFailResponse(int id)
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(true);
-            _mockRepositoryManager.Setup(x=>x.CategoryRepository.RemoveAsync(It.IsAny<int>())).ReturnsAsync(false);
+            _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<int>())).ReturnsAsync(false);
 
-            var result = await _categoryService.RemoveCategoryAsync(id);
+            Func<Task> func = async ()=> await _categoryService.RemoveCategoryAsync(id);
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<NoContentDto>>()
-                .Subject.Errors.First().Should().Be("silme hatası");
+            func.Should()
+                .ThrowAsync<CreateFailedException>()
+                .WithMessage("Category - Oluşturma Hatası !");
         }
 
         [Theory]
@@ -171,41 +168,42 @@ namespace StockMarket.Persistence.UnitTest.Services
             _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<int>())).ReturnsAsync(true);
             _mockRepositoryManager.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask);
 
-           var result = await _categoryService.RemoveCategoryAsync(id);
+            var result = await _categoryService.RemoveCategoryAsync(id);
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeOfType<SuccessResponseDto<NoContentDto>>();
+            result.Should().BeOfType<ResponseDto<NoContentDto>>();
         }
 
         [Fact]
-        public async void UpdateCategoryAsync_CategoryNotFound_ReturnsFailResponse()
+        public  void UpdateCategoryAsync_CategoryNotFound_NotFoundException()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(false);
 
-            var result = await _categoryService.UpdateCategoryAsync(It.IsAny<UpdateCategoryDto>());
+            Func<Task> func = async () => await _categoryService.UpdateCategoryAsync(It.IsAny<UpdateCategoryDto>());
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<NoContentDto>>()
-                .Subject.Errors.First().Should().Be("Bulunamadı");
+            func.Should()
+                .ThrowAsync<NotFoundException>()
+                .WithMessage("Category - Bulunamadı !");
         }
 
 
         [Fact]
-        public async void UpdateCategoryAsync_UpdateFailed_ReturnsFailResponse()
+        public  void UpdateCategoryAsync_UpdateFailed_ReturnsFailResponse()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(true);
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Update(It.IsAny<Category>())).Returns(false);
             _mockMapper.Setup(x => x.Map<Category>(It.IsAny<UpdateCategoryDto>())).Returns(new Category());
 
-            var result = await _categoryService.UpdateCategoryAsync(It.IsAny<UpdateCategoryDto>());
+            Func<Task> func = async () => await _categoryService.UpdateCategoryAsync(It.IsAny<UpdateCategoryDto>());
 
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-            result.Should().BeOfType<FailResponseDto<NoContentDto>>()
-                .Subject.Errors.First().Should().Be("güncelleme hatası");
+
+            func.Should()
+                .ThrowAsync<NotFoundException>()
+                .WithMessage("Category - Güncelleme Hatası !");
         }
 
         [Fact]
-        public async void UpdateCategoryAsync_UpdateSuccess_ReturnsSuccessResponse()
+        public async void UpdateCategoryAsync_UpdateSuccess_UpdateFailedException()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(true);
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Update(It.IsAny<Category>())).Returns(true);
@@ -214,7 +212,7 @@ namespace StockMarket.Persistence.UnitTest.Services
             var result = await _categoryService.UpdateCategoryAsync(It.IsAny<UpdateCategoryDto>());
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeOfType<SuccessResponseDto<NoContentDto>>();
+            result.Should().BeOfType<ResponseDto<NoContentDto>>();
         }
     }
 }
