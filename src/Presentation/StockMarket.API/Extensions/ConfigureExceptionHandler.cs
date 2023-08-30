@@ -24,8 +24,14 @@ namespace StockMarket.API.Extensions
 
                       if (exceptionHandlerFeature is not null)
                       {
-                          ErrorDto errorDto = new();
-                          errorDto.Errors = FormatErrors(exceptionHandlerFeature.Error.Message);
+                          ErrorDto errorDto = new()
+                          {
+                              Errors=FormatErrors(exceptionHandlerFeature.Error.Message)
+                          };
+
+                          var logger = app.Services.GetRequiredService<ILogger<Program>>();
+                          foreach (var error in errorDto.Errors)
+                              logger.LogError(error);
                           await context
                             .Response
                             .WriteAsync(JsonSerializer.Serialize(
@@ -44,7 +50,7 @@ namespace StockMarket.API.Extensions
             {
                 errors = message.Split("\n").ToList();
                 if (errors.Last().IsNullOrEmpty())
-                    errors.RemoveAt(errors.Count-1);
+                    errors.RemoveAt(errors.Count - 1);
             }
             else
                 errors.Add(message);

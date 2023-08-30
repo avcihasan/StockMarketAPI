@@ -15,11 +15,11 @@ namespace StockMarket.Persistence.Services.BackgroundServices
     public class ChangeCryptocurrencyPriceBackgroundService : IHostedService, IDisposable
     {
         Timer _timer;
-        readonly IServiceProvider service;
+        readonly IServiceProvider _service;
 
         public ChangeCryptocurrencyPriceBackgroundService(IServiceProvider service)
         {
-            this.service = service;
+            _service = service;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -31,14 +31,14 @@ namespace StockMarket.Persistence.Services.BackgroundServices
         }
         private void DoWork(object? state)
         {
-            //Random random = new();
-            //using var scope = service.CreateScope();
-            //var repositoryManager = scope.ServiceProvider.GetRequiredService<IRepositoryManager>();
-            //repositoryManager.CryptocurrencyRepository.GetAll().ToList().ForEach(x =>
-            //{
-            //    x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
-            //    x.CryptocurrencyPrices.Add(new() { CryptocurrencyId = x.Id, Date = DateTime.Now, Price = x.UnitPrice });
-            //});
+            Random random = new();
+            using var scope = _service.CreateScope();
+            var repositoryManager = scope.ServiceProvider.GetRequiredService<IRepositoryManager>();
+            repositoryManager.CryptocurrencyRepository.GetAll().ToList().ForEach(x =>
+            {
+                x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
+                x.CryptocurrencyPrices.Add(new() { CryptocurrencyId = x.Id, Date = DateTime.Now, Price = x.UnitPrice });
+            });
             //repositoryManager.Save();
         }
 

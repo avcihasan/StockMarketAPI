@@ -31,13 +31,11 @@ namespace StockMarket.Persistence.Services
 
         public async Task<ResponseDto<TokenDto>> LoginAsync(LoginUserDto loginUserDto)
         {
-            AppUser user = await _userManager.FindByNameAsync(loginUserDto.UserName);
-            if (user is null)
-                throw new UserNotFoundException();
+            AppUser user = await _userManager.FindByNameAsync(loginUserDto.UserName) ?? throw new UserNotFoundException();
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, loginUserDto.Password, false);
             if (signInResult.Succeeded)
             {
-                var accessToken = _tokenService.CreateAccessToken(1);
+                var accessToken = _tokenService.CreateAccessToken(1,user);
                 await _userService.UpdateRefreshTokenAsync(accessToken.RefreshToken, user, accessToken.Expiration, 1);
                 return ResponseDto<TokenDto>.Success(accessToken, System.Net.HttpStatusCode.OK);
             }
@@ -49,7 +47,7 @@ namespace StockMarket.Persistence.Services
             AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
             if (user != null && user.RefreshTokenEndDate > DateTime.Now)
             {
-                TokenDto token = _tokenService.CreateAccessToken(1);
+                TokenDto token = _tokenService.CreateAccessToken(1, user);
                 await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 1);
                 return ResponseDto<TokenDto>.Success(token, System.Net.HttpStatusCode.OK);
             }

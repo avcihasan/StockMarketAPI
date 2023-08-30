@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 using StockMarket.API.Extensions;
 using StockMarket.Application.Extensions;
 using StockMarket.Infrastructure.Extensions;
 using StockMarket.Infrastructure.Filters;
 using StockMarket.Persistence.Extensions;
+using System.Collections.ObjectModel;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,10 +51,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SigningKey"])),
 
-             LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false
+             LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null && expires > DateTime.UtcNow,
+             NameClaimType =ClaimTypes.Name 
+
         };
     });
-
+builder.Services.Add_HttpLogging();
+builder.Host.AddSeriLog(builder.Configuration);
 
 var app = builder.Build();
 
@@ -58,6 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpLogging();
 app.UseCustomExceptionHandler();
 app.UseCors();
 app.UseHttpsRedirection();
@@ -65,6 +75,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseAddUserNameToLogContext();
 
 app.MapControllers();
 
