@@ -1,4 +1,5 @@
-﻿using StockMarket.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using StockMarket.Application.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace StockMarket.Application.UnitOfWorks
     {
         public ICryptocurrencyRepository CryptocurrencyRepository { get;}
         public ICategoryRepository CategoryRepository { get; }
+        public ICryptocurrencyWalletItemRepository CryptocurrencyWalletItemRepository { get; }
 
         void Save();
         Task SaveAsync();

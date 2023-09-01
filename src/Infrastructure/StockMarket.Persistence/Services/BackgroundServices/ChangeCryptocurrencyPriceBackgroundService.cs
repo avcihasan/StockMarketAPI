@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockMarket.Application.Services;
 using StockMarket.Application.UnitOfWorks;
+using StockMarket.Persistence.Contexts;
 using StockMarket.Persistence.UnitOfWorks;
 using System;
 using System.Collections.Generic;
@@ -24,22 +26,22 @@ namespace StockMarket.Persistence.Services.BackgroundServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
-            TimeSpan.FromMinutes(1));
+
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
             return Task.CompletedTask;
         }
         private void DoWork(object? state)
         {
             Random random = new();
             using var scope = _service.CreateScope();
-            var repositoryManager = scope.ServiceProvider.GetRequiredService<IRepositoryManager>();
-            repositoryManager.CryptocurrencyRepository.GetAll().ToList().ForEach(x =>
-            {
-                x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
-                x.CryptocurrencyPrices.Add(new() { CryptocurrencyId = x.Id, Date = DateTime.Now, Price = x.UnitPrice });
-            });
-            //repositoryManager.Save();
+            var db = scope.ServiceProvider.GetRequiredService<StockMartketDbContext>();
+            db.Cryptocurrencies.Include(x=>x.CryptocurrencyCurrentPrice).Include(x => x.Category).ToList().ForEach(x =>
+             {
+                 //x.UnitPrice = x.UnitPrice *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
+                 db.CryptocurrencyPastPrices.Add(new() { CryptocurrencyId = x.Id, Price = x.CryptocurrencyCurrentPrice.Price });
+                 x.CryptocurrencyCurrentPrice.Price *= Convert.ToDecimal((random.NextDouble() + 0.5).ToString("0.00"));
+             });
+            db.SaveChanges();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -52,6 +54,6 @@ namespace StockMarket.Persistence.Services.BackgroundServices
         {
             _timer.Dispose();
         }
-      
+
     }
 }

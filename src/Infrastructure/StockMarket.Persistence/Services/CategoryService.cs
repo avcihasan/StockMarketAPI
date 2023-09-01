@@ -35,7 +35,7 @@ namespace StockMarket.Persistence.Services
                     .GetAll()
                     .ToList()), HttpStatusCode.OK));
 
-        public async Task<ResponseDto<CategoryDto>> GetCategoryAsync(int id)
+        public async Task<ResponseDto<CategoryDto>> GetCategoryAsync(string id)
         {
             Category category = await _repositoryManager.CategoryRepository.GetAsync(id);
             return category is null
@@ -43,7 +43,7 @@ namespace StockMarket.Persistence.Services
                 : ResponseDto<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), HttpStatusCode.OK);
         }
 
-        public async Task<ResponseDto<NoContentDto>> RemoveCategoryAsync(int id)
+        public async Task<ResponseDto<NoContentDto>> RemoveCategoryAsync(string id)
         {
             if (!_repositoryManager.CategoryRepository.Any(x => x.Id == id))
                 throw new NotFoundException(typeof(Category));

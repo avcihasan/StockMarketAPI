@@ -16,5 +16,12 @@ namespace StockMarket.Persistence.Repositories
         public CryptocurrencyRepository(StockMartketDbContext stockMartketDbContext) : base(stockMartketDbContext)
         {
         }
-    } 
+        public override async Task<bool> CreateAsync(Cryptocurrency entity)
+        {
+            if (await base.CreateAsync(entity))
+                return (await _stockMartketDbContext.CryptocurrencyCurrentPrices.AddAsync(new() { CryptocurrencyId = entity.Id, Price = entity.UnitPrice})).State == EntityState.Added;
+            else 
+                return false;
+        }
+    }
 }

@@ -12,6 +12,6 @@ namespace StockMarket.Application.DTOs.CryptocurrencyDTOs
         public string Code { get; set; }
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
     }
 }

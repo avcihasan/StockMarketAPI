@@ -77,37 +77,27 @@ namespace StockMarket.Persistence.UnitTest.Services
                 .BeOfType<List<CategoryDto>>();
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public void GetCategoryAsync_CategoryNotFound_NotFoundException(int id)
+        [Fact]
+        public void GetCategoryAsync_CategoryNotFound_NotFoundException()
         {
             Category category = null;
-            _mockRepositoryManager.Setup(x => x.CategoryRepository.GetAsync(It.IsAny<int>(), It.IsAny<bool>())).ReturnsAsync(category);
+            _mockRepositoryManager.Setup(x => x.CategoryRepository.GetAsync(It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(category);
 
-            Func<Task> func = async () => await _categoryService.GetCategoryAsync(id);
+            Func<Task> func = async () => await _categoryService.GetCategoryAsync(It.IsAny<string>());
 
             func.Should()
                 .ThrowAsync<NotFoundException>()
                 .WithMessage("Category - Bulunamadı !");
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public async void GetCategoryAsync_CategoryFound_ReturnsSuccessResponseWithCategoryDto(int id)
+        [Fact]
+        public async void GetCategoryAsync_CategoryFound_ReturnsSuccessResponseWithCategoryDto()
         {
-            _mockRepositoryManager.Setup(x => x.CategoryRepository.GetAsync(It.IsAny<int>(), It.IsAny<bool>())).ReturnsAsync(new Category());
+            _mockRepositoryManager.Setup(x => x.CategoryRepository.GetAsync(It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(new Category());
             _mockMapper.Setup(x => x.Map<CategoryDto>(It.IsAny<Category>())).Returns(new CategoryDto());
 
 
-            var result = await _categoryService.GetCategoryAsync(id);
+            var result = await _categoryService.GetCategoryAsync(It.IsAny<string>());
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeOfType<ResponseDto<CategoryDto>>()
@@ -120,17 +110,12 @@ namespace StockMarket.Persistence.UnitTest.Services
 
 
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public  void RemoveCategoryAsync_CategoryNotFound_NotFoundException(int id)
+        [Fact]
+        public  void RemoveCategoryAsync_CategoryNotFound_NotFoundException()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(false);
 
-            Func<Task> func = async () => await _categoryService.RemoveCategoryAsync(id);
+            Func<Task> func = async () => await _categoryService.RemoveCategoryAsync(It.IsAny<string>());
 
             func.Should()
                 .ThrowAsync<NotFoundException>()
@@ -138,37 +123,27 @@ namespace StockMarket.Persistence.UnitTest.Services
         }
 
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public  void RemoveCategoryAsync_RemoveFailed_ReturnsFailResponse(int id)
+        [Fact]
+        public  void RemoveCategoryAsync_RemoveFailed_ReturnsFailResponse()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(true);
-            _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<int>())).ReturnsAsync(false);
+            _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-            Func<Task> func = async ()=> await _categoryService.RemoveCategoryAsync(id);
+            Func<Task> func = async ()=> await _categoryService.RemoveCategoryAsync(It.IsAny<string>());
 
             func.Should()
                 .ThrowAsync<CreateFailedException>()
                 .WithMessage("Category - Oluşturma Hatası !");
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public async void RemoveCategoryAsync_RemoveSuccess_ReturnsSuccessResponse(int id)
+        [Fact]
+        public async void RemoveCategoryAsync_RemoveSuccess_ReturnsSuccessResponse()
         {
             _mockRepositoryManager.Setup(x => x.CategoryRepository.Any(It.IsAny<Expression<Func<Category, bool>>>())).Returns(true);
-            _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<int>())).ReturnsAsync(true);
+            _mockRepositoryManager.Setup(x => x.CategoryRepository.RemoveAsync(It.IsAny<string>())).ReturnsAsync(true);
             _mockRepositoryManager.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask);
 
-            var result = await _categoryService.RemoveCategoryAsync(id);
+            var result = await _categoryService.RemoveCategoryAsync(It.IsAny<string>());
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeOfType<ResponseDto<NoContentDto>>();

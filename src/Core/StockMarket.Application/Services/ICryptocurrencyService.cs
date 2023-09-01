@@ -14,10 +14,10 @@ namespace StockMarket.Application.Services
     {
         Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync();
         Task<ResponseDto<List<CryptocurrencyDto>>> GetAllCryptocurrenciesAsync(Expression<Func<Cryptocurrency,bool>> func);
-        Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(int id);
+        Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(string id);
         Task<ResponseDto<CryptocurrencyDto>> GetCryptocurrencyAsync(Expression<Func<Cryptocurrency, bool>> func);
         Task<ResponseDto<NoContentDto>> CreateCryptocurrencyAsync(CreateCryptocurrencyDto cryptocurrency);
-        Task<ResponseDto<NoContentDto>> RemoveCryptocurrencyAsync(int id);
+        Task<ResponseDto<NoContentDto>> RemoveCryptocurrencyAsync(string id);
         Task<ResponseDto<NoContentDto>> UpdateCryptocurrencyAsync(UpdateCryptocurrencyDto updateCryptocurrencyDto);
     }
 }

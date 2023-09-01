@@ -22,7 +22,7 @@ namespace StockMarket.Application.Mapping
             CreateMap<CreateCryptocurrencyDto, Cryptocurrency>();
             CreateMap<UpdateCryptocurrencyDto, Cryptocurrency>();
 
-            CreateMap<CryptocurrencyPrice, CryptocurrencyPriceDto>();
+            CreateMap<CryptocurrencyPastPrice, CryptocurrencyPriceDto>();
                 
             CreateMap<CreateUserDto, AppUser>();
 

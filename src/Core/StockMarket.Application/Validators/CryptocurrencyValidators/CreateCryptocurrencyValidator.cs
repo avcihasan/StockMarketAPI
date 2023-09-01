@@ -37,8 +37,8 @@ namespace StockMarket.Application.Validators.CryptocurrencyValidators
                     .WithMessage("Birim fiyat sıfırdan büyük olmalı!");
 
             RuleFor(x => x.CategoryId)
-                .GreaterThan(0)
-                    .WithMessage("Kategori Id sıfırdan büyük olamlı!");
+               .NotNull()
+                    .WithMessage("Kategori Id giriniz!");
         }
         
     }

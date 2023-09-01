@@ -22,11 +22,11 @@ namespace StockMarket.API.Controllers
             => CreateActionResult(await _serviceManager.CryptocurrencyService.GetAllCryptocurrenciesAsync());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] string id)
             => CreateActionResult(await _serviceManager.CryptocurrencyService.GetCryptocurrencyAsync(id));
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove([FromRoute] int id)
+        public async Task<IActionResult> Remove([FromRoute] string id)
             => CreateActionResult(await _serviceManager.CryptocurrencyService.RemoveCryptocurrencyAsync(id));
 
         [HttpPut]

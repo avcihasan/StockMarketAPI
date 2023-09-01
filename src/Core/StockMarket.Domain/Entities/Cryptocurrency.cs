@@ -11,16 +11,18 @@ namespace StockMarket.Domain.Entities
     {
         public Cryptocurrency()
         {
-            CryptocurrencyPrices=new HashSet<CryptocurrencyPrice>();
+            CryptocurrencyPrices = new HashSet<CryptocurrencyPastPrice>();
         }
         public string Code { get; set; }
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
         public int Stock { get; set; }
 
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public ICollection<CryptocurrencyPrice> CryptocurrencyPrices { get; set; }
+        public CryptocurrencyCurrentPrice CryptocurrencyCurrentPrice { get; set; }
+
+        public ICollection<CryptocurrencyPastPrice> CryptocurrencyPrices { get; set; }
     }
 }

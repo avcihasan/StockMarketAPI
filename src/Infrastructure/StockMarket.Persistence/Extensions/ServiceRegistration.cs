@@ -19,6 +19,7 @@ namespace StockMarket.Persistence.Extensions
             service.AddScoped<ICategoryService , CategoryService>();
             service.AddScoped<IUserService , UserService>();
             service.AddScoped<IAuthService , AuthService>();
+            service.AddScoped<IWalletService ,WalletService>();
 
             service.AddHostedService<ChangeCryptocurrencyPriceBackgroundService>();
 

@@ -14,9 +14,9 @@ namespace StockMarket.Application.Services
     public interface ICategoryService
     {
         Task<ResponseDto<List<CategoryDto>>> GetAllCategoriesAsync();
-        Task<ResponseDto<CategoryDto>> GetCategoryAsync(int id);
+        Task<ResponseDto<CategoryDto>> GetCategoryAsync(string id);
         Task<ResponseDto<NoContentDto>> CreateCategoryAsync(CreateCategoryDto categoryDto);
-        Task<ResponseDto<NoContentDto>> RemoveCategoryAsync(int id);
+        Task<ResponseDto<NoContentDto>> RemoveCategoryAsync(string id);
         Task<ResponseDto<NoContentDto>> UpdateCategoryAsync(UpdateCategoryDto categoryDto);
     }
 }

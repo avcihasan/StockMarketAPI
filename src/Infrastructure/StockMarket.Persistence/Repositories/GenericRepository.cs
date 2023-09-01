@@ -8,62 +8,65 @@ using System.Linq.Expressions;
 
 namespace StockMarket.Persistence.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public abstract class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, new()
     {
         protected readonly DbSet<T> _dbSet;
+        protected readonly StockMartketDbContext _stockMartketDbContext;
 
         public GenericRepository(StockMartketDbContext stockMartketDbContext)
         {
+            _stockMartketDbContext = stockMartketDbContext;
             _dbSet = stockMartketDbContext.Set<T>();
         }
 
-        public async Task<bool> CreateAsync(T entity)
+        public virtual async Task<bool> CreateAsync(T entity)
             => (await _dbSet.AddAsync(entity)).State == EntityState.Added;
 
-        public async Task CreateRangeAsync(List<T> entities)
+        public virtual async Task CreateRangeAsync(List<T> entities)
            => await _dbSet.AddRangeAsync(entities);
 
-        public async Task CreateRangeAsync(params T[] entities)
+        public virtual async Task CreateRangeAsync(params T[] entities)
            => await _dbSet.AddRangeAsync(entities);
 
-        public async Task RemoveRangeAsync(params int[] ids)
+        public virtual async Task RemoveRangeAsync(params string[] ids)
         {
-            foreach (int id in ids)
+            foreach (string id in ids)
                 await RemoveAsync(id);
         }
 
-        public async Task<bool> RemoveAsync(int id)
+        public virtual async Task<bool> RemoveAsync(string id)
             => _dbSet.Remove(await GetAsync(id)).State == EntityState.Deleted;
-        public async Task<T> GetAsync(int id, bool tracking = true)
+        public virtual async Task<T> GetAsync(string id, bool tracking = true)
             => await GetAll(tracking).FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> func, bool tracking = true)
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> func, bool tracking = true)
             => await GetAll(tracking).FirstOrDefaultAsync(func);
 
-        public IQueryable<T> GetAll(bool tracking = true)
+        public virtual IQueryable<T> GetAll(bool tracking = true)
             => Track(_dbSet.AsQueryable(), tracking);
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> func, bool tracking = true)
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> func, bool tracking = true)
             => Track(_dbSet.Where(func), tracking);
 
-        public bool Update(T entity)
+        public virtual bool Update(T entity)
             => _dbSet.Update(entity).State == EntityState.Modified;
 
 
-        private static IQueryable<T> Track(IQueryable<T> query,bool tracking)
+        public virtual bool Any(Expression<Func<T, bool>> func)
+            => _dbSet.Where(func).AsNoTracking().Any();
+
+        public virtual IQueryable<T> GetAll(params string[] includes)
+        {
+            IQueryable<T> query = GetAll();
+            return query.Include(includes.First());
+        }
+
+
+        private static IQueryable<T> Track(IQueryable<T> query, bool tracking)
         {
             if (!tracking)
                 query.AsNoTracking();
             return query;
-        }
-
-        public bool Any(Expression<Func<T, bool>> func)
-            => _dbSet.Where(func).AsNoTracking().Any();
-
-        public IQueryable<T> GetAll(params string[] includes)
-        {
-            IQueryable<T> query = GetAll();
-            return query.Include(includes.First());
         }
     }
 }

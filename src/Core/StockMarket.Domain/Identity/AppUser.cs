@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using StockMarket.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,10 @@ namespace StockMarket.Domain.Identity
         public DateTime? RefreshTokenEndDate { get; set; }
 
 
+        public CryptocurrencyWallet CryptocurrencyWallet { get; set; }
+        public Wallet Wallet { get; set; }
+
+
     }
 }
+

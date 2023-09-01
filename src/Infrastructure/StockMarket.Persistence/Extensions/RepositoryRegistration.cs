@@ -19,6 +19,7 @@ namespace StockMarket.Persistence.Extensions
     {
         public static void AddRepositories(this IServiceCollection services)
         {
+
             services.AddScoped<ICryptocurrencyRepository>(sp =>
             {
                 IRedisService redisService = sp.GetRequiredService<IRedisService>();
@@ -28,6 +29,8 @@ namespace StockMarket.Persistence.Extensions
                 return new CryptocurrencyRedisRepository(cryptocurrencyRepository,redisService);
             });
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICryptocurrencyWalletItemRepository, CryptocurrencyWalletItemRepository>(); 
+           
         }
 
     }

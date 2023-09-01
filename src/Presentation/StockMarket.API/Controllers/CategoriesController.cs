@@ -6,7 +6,7 @@ using StockMarket.Application.UnitOfWorks;
 
 namespace StockMarket.API.Controllers
 {
-    [Authorize(AuthenticationSchemes ="User")]
+    //[Authorize(AuthenticationSchemes ="User")]
     public class CategoriesController : BaseController
     {
         readonly IServiceManager _serviceManager;
@@ -20,7 +20,7 @@ namespace StockMarket.API.Controllers
         public async Task<IActionResult> Get()
             => CreateActionResult(await _serviceManager.CategoryService.GetAllCategoriesAsync());
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] string id)
             => CreateActionResult(await _serviceManager.CategoryService.GetCategoryAsync(id));
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCategoryDto categoryDto)
@@ -29,7 +29,7 @@ namespace StockMarket.API.Controllers
         public async Task<IActionResult> Put([FromBody] UpdateCategoryDto categoryDto)
            => Ok(await _serviceManager.CategoryService.UpdateCategoryAsync(categoryDto));
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] string id)
            => Ok(await _serviceManager.CategoryService.RemoveCategoryAsync(id));
     }
 }

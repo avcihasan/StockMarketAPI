@@ -70,7 +70,7 @@ namespace StockMarket.Persistence.Repositories.Caching
         public IQueryable<Cryptocurrency> GetAll(params string[] includes)
             => _repository.GetAll(includes);
 
-        public async Task<Cryptocurrency> GetAsync(int id, bool tracking = true)
+        public async Task<Cryptocurrency> GetAsync(string id, bool tracking = true)
         {
             if (!_database.KeyExists(key))
                 return await RedisSet().FirstOrDefaultAsync(x => x.Id == id);
@@ -82,12 +82,12 @@ namespace StockMarket.Persistence.Repositories.Caching
         public  Task<Cryptocurrency> GetAsync(Expression<Func<Cryptocurrency, bool>> func, bool tracking = true)
             =>  Task.FromResult(GetAll().FirstOrDefault(func));
 
-        public async Task<bool> RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(string id)
         {
             await _repository.RemoveAsync(id);
             return await _database.HashDeleteAsync(key, id);
         }
-        public async Task RemoveRangeAsync(params int[] ids)
+        public async Task RemoveRangeAsync(params string[] ids)
         {
             foreach (var item in ids)
                 await RemoveAsync(item);

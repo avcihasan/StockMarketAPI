@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.API", "src\Pres
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3620D7D6-BD8D-4FA7-BF2A-29EB56590051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMarket.Persistence.UnitTest", "tests\StockMarket.Persistence.UnitTest\StockMarket.Persistence.UnitTest.csproj", "{EFEE3C9F-064E-434D-A456-8273BC1D300D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockMarket.Persistence.UnitTest", "tests\StockMarket.Persistence.UnitTest\StockMarket.Persistence.UnitTest.csproj", "{EFEE3C9F-064E-434D-A456-8273BC1D300D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
